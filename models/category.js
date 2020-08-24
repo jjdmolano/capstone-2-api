@@ -5,12 +5,16 @@ const categorySchema = new mongoose.Schema ({
         type: String,
         required: [true, 'Category is required']
     },
-    isExpense: {
-        type: Boolean,
-        default: true
+    type: {
+        type: String,
+        required: [true, 'Type is required']
     },
     transactions: [
         {
+            transactionId: {
+                type: String,
+                required: [true, 'Transaction ID is required']
+            },
             description: {
                 type: String,
                 required: [true, 'Description is required']

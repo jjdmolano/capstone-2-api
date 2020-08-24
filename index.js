@@ -29,8 +29,10 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 // const userRoutes = require('./routes/user')
+const categoryRoutes = require('./routes/category')
 
 // app.use('/api/user', cors(corsOptions), userRoutes)
+app.use('/api/categories', cors(corsOptions), categoryRoutes)
 
 app.listen(process.env.PORT, ()=> {
     console.log(`API is now online on port ${process.env.PORT}`)
