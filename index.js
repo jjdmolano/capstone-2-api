@@ -28,11 +28,9 @@ db.once('open', ()=> {
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-// const userRoutes = require('./routes/user')
-const categoryRoutes = require('./routes/category')
+const userRoutes = require('./routes/user')
 
-// app.use('/api/user', cors(corsOptions), userRoutes)
-app.use('/api/categories', cors(corsOptions), categoryRoutes)
+app.use('/api/users', cors(corsOptions), userRoutes)
 
 app.listen(process.env.PORT, ()=> {
     console.log(`API is now online on port ${process.env.PORT}`)
