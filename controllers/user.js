@@ -1,6 +1,8 @@
 const User = require('../models/user')
 const auth = require('../auth')
 const bcrypt = require('bcrypt')
+const {OAuth2Client} = require('google-auth-library')
+const clientId = '668311413806-b1kj21kiv4doqb878flbm5pd2uo7r51m.apps.googleusercontent.com'
 require('dotenv').config()
 
 // USER CONTROLLERS
@@ -49,6 +51,31 @@ module.exports.getDetails = (params) => {
         user.password = undefined
         return user
     })
+}
+
+// Login user through Google
+module.exports.verifyGoogleTokenId = async(tokenId) => {
+    const client = new OAuth2Client(clientId)
+    const data = await client.verifyIdToken({ idToken: tokenId, audience: clientId })
+
+    if(data.payload.email_verified === true) {
+        const user = await User.findOne({email: data.payload.email}).exec()
+        if(user != null) {
+				return {accessToken: auth.createAccessToken(user.toObject())}
+		} else {
+			const newUser = new User ({
+				firstName: data.payload.given_name,
+				lastName: data.payload.family_name,
+				email: data.payload.email
+			})
+
+			return newUser.save().then((user,err)=> {
+				return {accessToken: auth.createAccessToken(user.toObject())}
+			})
+        }
+    } else {
+        return {err: 'google-auth-error'}
+    }
 }
 
 // CATEGORY CONTROLLERS
@@ -123,32 +150,3 @@ module.exports.deleteTransaction = (params) => {
         })
     })
 }
-
-// const {OAuth2Client, auth} = require('google-auth-library')
-
-// module.exports.verifyGoogleTokenId = async(tokenId) => {
-//     const client = new OAuth2Client(clientId)
-//     const data = await client.verifyIdToken({ idToken: tokenId, audience: clientId })
-
-//     if(data.payload.email_verified) {
-//         const user = await (await User.findOne({email: data.payload.email})).exec()
-//         if(user != null) {
-//             return user.loginType === 'google'
-//             ? {accessToken: auth.createAccessToken(user.toObject())}
-//             : {error: 'login-type-error'}
-//         } else {
-//             const newUser = new User ({
-//                 firstName: data.payload.given_name,
-//                 lastName: data.payload.family_name,
-//                 email: data.payload.email
-//             })
-
-//             return newUser.save().then(( user, err ) => {
-//                 console.log(user)
-//                 return {accessToken: auth.createAccessToken(user.toObject())}
-//             })
-//         }
-//     } else {
-//         return {err: 'google-auth-error'}
-//     }
-// }

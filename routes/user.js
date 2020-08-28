@@ -28,6 +28,11 @@ router.get('/:id', (req, res) => {
     .then(result => res.send(result))
 })
 
+// Login user through Google
+router.post('/verify-google-id-token', async (req, res) => {
+    res.send(await UserController.verifyGoogleTokenId(req.body.tokenId))
+})
+
 // CATEGORY ROUTES
 // Add user category
 router.put('/:id/categories', (req, res) => {
