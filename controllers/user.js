@@ -3,6 +3,7 @@ const auth = require('../auth')
 const bcrypt = require('bcrypt')
 require('dotenv').config()
 
+// USER CONTROLLERS
 // Register user
 module.exports.register = (params) => {
     const user = new User({
@@ -50,13 +51,14 @@ module.exports.getDetails = (params) => {
     })
 }
 
+// CATEGORY CONTROLLERS
 // Add user category
 module.exports.addCategory = (params) => {
     return User.findById(params.userId)
     .then((user, err) => {
         if(err) return false
         // Duplicate category check
-        const duplicate = user.categories.find(category => category.categoryName === params.categoryName)
+        const duplicate = user.categories.find(category => category.categoryName.toLowerCase() === params.categoryName.toLowerCase())
         if(duplicate){
             return false
         } else {
@@ -87,6 +89,7 @@ module.exports.deleteCategory = (params) => {
     })
 }
 
+// TRANSACTION CONTROLLERS
 // Add user transaction
 module.exports.addTransaction = (params) => {
     return User.findById(params.userId)

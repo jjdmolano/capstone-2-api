@@ -40,14 +40,14 @@ const userSchema = new mongoose.Schema({
                 required: [true, 'Category type is required']
             },
             amount: {
-                type: String,
+                type: Number,
                 required: [true, 'Amount is required']
             },
             description: {
                 type: String
             },
             balanceAfterTransaction: {
-                type: String
+                type: Number
             },
             dateAdded: {
                 type: Date,

@@ -3,6 +3,7 @@ const router = express.Router()
 const auth = require('../auth')
 const UserController = require('../controllers/user')
 
+// USER ROUTES
 // Register user
 router.post('/', (req, res) => {
     UserController.register(req.body)
@@ -15,12 +16,19 @@ router.post('/login', (req, res) => {
     .then(result => res.send(result))
 })
 
+// Get user details from token
+router.get('/details', auth.verify, (req, res) => {
+    UserController.getDetails({userId:auth.decode(req.headers.authorization).id})
+    .then(result => res.send(result))
+})
+
 // Get user details
 router.get('/:id', (req, res) => {
     UserController.getDetails({userId:req.params.id})
     .then(result => res.send(result))
 })
 
+// CATEGORY ROUTES
 // Add user category
 router.put('/:id/categories', (req, res) => {
 
@@ -33,7 +41,7 @@ router.put('/:id/categories', (req, res) => {
     .then(result => res.send(result))
 })
 
-// Delete user transaction
+// Delete user category
 router.delete('/:id/:categoryId', (req, res) => {
     const arg = {
         userId: req.params.id,
@@ -43,6 +51,7 @@ router.delete('/:id/:categoryId', (req, res) => {
     .then(result => res.send(result))
 })
 
+// TRANSACTION ROUTES
 // Add user transaction
 router.put('/:id/transactions', (req, res) => {
 
