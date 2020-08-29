@@ -153,17 +153,4 @@ module.exports.deleteTransaction = (params) => {
     )
 }
 
-// Update user transaction
-module.exports.updateTransaction = (params) => {
-    return User.findById(params.userId)
-    .then((user,err) => {
-        if (err) return false
-        const toUpdate = user.transactions
-            .filter(transaction => transaction._id == params.transactionId)
-        console.log(toUpdate[0].amount)
-        return user.save()
-        .then((updatedUser, err) => {
-            return (err) ? false : true
-        })
-    })
-}
+// TODO: Update user transaction
