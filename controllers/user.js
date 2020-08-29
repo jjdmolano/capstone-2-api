@@ -106,14 +106,15 @@ module.exports.deleteCategory = (params) => {
     return User.findById(params.userId)
     .then((user,err) => {
         if (err) return false
-        user.categories.remove({
+        user.categories.pull({
             _id: params.categoryId
         })
         return user.save()
         .then((updatedUser, err) => {
             return (err) ? false : true
         })
-    })
+        }
+    )
 }
 
 // TRANSACTION CONTROLLERS
@@ -141,9 +142,25 @@ module.exports.deleteTransaction = (params) => {
     return User.findById(params.userId)
     .then((user,err) => {
         if (err) return false
-        user.transactions.remove({
+        user.transactions.pull({
             _id: params.transactionId
         })
+        return user.save()
+        .then((updatedUser, err) => {
+            return (err) ? false : true
+        })
+        }
+    )
+}
+
+// Update user transaction
+module.exports.updateTransaction = (params) => {
+    return User.findById(params.userId)
+    .then((user,err) => {
+        if (err) return false
+        const toUpdate = user.transactions
+            .filter(transaction => transaction._id == params.transactionId)
+        console.log(toUpdate[0].amount)
         return user.save()
         .then((updatedUser, err) => {
             return (err) ? false : true

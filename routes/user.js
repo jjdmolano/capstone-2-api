@@ -72,7 +72,7 @@ router.put('/:id/transactions', (req, res) => {
 })
 
 // Delete user transaction
-router.delete('/:id/:transactionId', (req, res) => {
+router.delete('/:id/tr/:transactionId', (req, res) => {
     const arg = {
         userId: req.params.id,
         transactionId: req.params.transactionId
@@ -80,5 +80,7 @@ router.delete('/:id/:transactionId', (req, res) => {
     UserController.deleteTransaction(arg)
     .then(result => res.send(result))
 })
+
+// TODO: Update user transaction
 
 module.exports = router
