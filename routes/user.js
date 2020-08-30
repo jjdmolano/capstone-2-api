@@ -82,5 +82,19 @@ router.delete('/:id/tr/:transactionId', (req, res) => {
 })
 
 // TODO: Update user transaction
+router.put('/:id/tr/:transactionId', (req, res) => {
+
+    const arg = {
+        dateAdded: req.body.dateAdded,
+        userId: req.params.id,
+        transactionId: req.params.transactionId,
+        categoryName: req.body.categoryName,
+        categoryType: req.body.categoryType,
+        amount: req.body.amount,
+        description: req.body.description
+    }
+    UserController.updateTransaction(arg)
+    .then(result => res.send(result))
+})
 
 module.exports = router

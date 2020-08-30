@@ -154,3 +154,24 @@ module.exports.deleteTransaction = (params) => {
 }
 
 // TODO: Update user transaction
+module.exports.updateTransaction = (params) => {
+    return User.findById(params.userId)
+    .then((user, err) => {
+        if (err) return false
+        user.transactions.pull({
+            _id: params.transactionId
+        })
+        user.transactions.push({
+            dateAdded: params.dateAdded,
+            _id: params.transactionId,
+            categoryName: params.categoryName,
+            categoryType: params.categoryType,
+            amount: params.amount,
+            description: params.description
+        })
+        return user.save()
+        .then((updatedUser, err) => {
+            return (err) ? false : true
+        })
+    })
+}

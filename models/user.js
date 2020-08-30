@@ -43,7 +43,8 @@ const userSchema = new mongoose.Schema({
                 required: [true, 'Amount is required']
             },
             description: {
-                type: String
+                type: String,
+                required: [true, 'Description is required']
             },
             balanceAfterTransaction: {
                 type: Number
