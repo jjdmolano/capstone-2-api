@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
     ],
     transactions: [
         {
+            categoryId: {
+                type: String,
+                required: [true, 'Category ID is required']
+            },
             categoryName: {
                 type: String,
                 required: [true, 'Category name is required']

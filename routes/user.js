@@ -62,6 +62,7 @@ router.put('/:id/transactions', (req, res) => {
 
     const arg = {
         userId: req.params.id,
+        categoryId: req.body.categoryId,
         categoryName: req.body.categoryName,
         categoryType: req.body.categoryType,
         amount: req.body.amount,

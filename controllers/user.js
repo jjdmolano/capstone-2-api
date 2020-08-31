@@ -2,6 +2,7 @@ const User = require('../models/user')
 const auth = require('../auth')
 const bcrypt = require('bcrypt')
 const {OAuth2Client} = require('google-auth-library')
+const { update } = require('../models/user')
 const clientId = '668311413806-b1kj21kiv4doqb878flbm5pd2uo7r51m.apps.googleusercontent.com'
 require('dotenv').config()
 
@@ -111,7 +112,16 @@ module.exports.deleteCategory = (params) => {
         })
         return user.save()
         .then((updatedUser, err) => {
-            return (err) ? false : true
+            updatedUser.transactions.filter(transaction => transaction.categoryId == params.categoryId)
+            .map(transaction => {
+                updatedUser.transactions.pull({
+                    _id: transaction._id
+                })
+            })
+            return user.save()
+            .then((updatedUser, err) => {
+                return (err) ? false : true
+            })
         })
         }
     )
@@ -124,6 +134,7 @@ module.exports.addTransaction = (params) => {
     .then((user, err) => {
         if(err) return false
         user.transactions.push({
+            categoryId: params.categoryId,
             categoryName: params.categoryName,
             categoryType: params.categoryType,
             amount: params.amount,
