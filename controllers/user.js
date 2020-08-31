@@ -158,17 +158,11 @@ module.exports.updateTransaction = (params) => {
     return User.findById(params.userId)
     .then((user, err) => {
         if (err) return false
-        user.transactions.pull({
-            _id: params.transactionId
-        })
-        user.transactions.push({
-            dateAdded: params.dateAdded,
-            _id: params.transactionId,
-            categoryName: params.categoryName,
-            categoryType: params.categoryType,
-            amount: params.amount,
-            description: params.description
-        })
+        const [filteredTransaction] = user.transactions.filter(transaction => transaction._id == params.transactionId)
+        filteredTransaction.categoryName =  params.categoryName
+        filteredTransaction.categoryType = params.categoryType
+        filteredTransaction.amount = params.amount
+        filteredTransaction.description = params.description
         return user.save()
         .then((updatedUser, err) => {
             return (err) ? false : true

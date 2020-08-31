@@ -85,7 +85,6 @@ router.delete('/:id/tr/:transactionId', (req, res) => {
 router.put('/:id/tr/:transactionId', (req, res) => {
 
     const arg = {
-        dateAdded: req.body.dateAdded,
         userId: req.params.id,
         transactionId: req.params.transactionId,
         categoryName: req.body.categoryName,
