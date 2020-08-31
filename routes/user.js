@@ -82,11 +82,12 @@ router.delete('/:id/tr/:transactionId', (req, res) => {
     .then(result => res.send(result))
 })
 
-// TODO: Update user transaction
+// Update user transaction
 router.put('/:id/tr/:transactionId', (req, res) => {
 
     const arg = {
         userId: req.params.id,
+        categoryId: req.body.categoryId,
         transactionId: req.params.transactionId,
         categoryName: req.body.categoryName,
         categoryType: req.body.categoryType,

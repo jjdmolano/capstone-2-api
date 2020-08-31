@@ -164,12 +164,13 @@ module.exports.deleteTransaction = (params) => {
     )
 }
 
-// TODO: Update user transaction
+// Update user transaction
 module.exports.updateTransaction = (params) => {
     return User.findById(params.userId)
     .then((user, err) => {
         if (err) return false
         const [filteredTransaction] = user.transactions.filter(transaction => transaction._id == params.transactionId)
+        filteredTransaction.categoryId = params.categoryId
         filteredTransaction.categoryName =  params.categoryName
         filteredTransaction.categoryType = params.categoryType
         filteredTransaction.amount = params.amount
