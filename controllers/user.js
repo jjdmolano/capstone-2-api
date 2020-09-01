@@ -2,7 +2,6 @@ const User = require('../models/user')
 const auth = require('../auth')
 const bcrypt = require('bcrypt')
 const {OAuth2Client} = require('google-auth-library')
-const { update } = require('../models/user')
 const clientId = '668311413806-b1kj21kiv4doqb878flbm5pd2uo7r51m.apps.googleusercontent.com'
 require('dotenv').config()
 
