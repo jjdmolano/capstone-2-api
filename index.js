@@ -6,7 +6,7 @@ require('dotenv').config()
 const port = process.env.PORT
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'https://capstone-2-client.vercel.app',
     optionsSuccessStatus: 200
 }
 
