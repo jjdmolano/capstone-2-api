@@ -6,7 +6,7 @@ require('dotenv').config()
 const port = process.env.PORT
 
 const corsOptions = {
-    origin: ['http://localhost:3000','https://molano-capstone-2-client.vercel.app/','https://capstone-2-client-git-master.jjdmolano.vercel.app/','https://capstone-2-client-git-visualupdate2.jjdmolano.vercel.app/','https://capstone-2-client.jjdmolano.vercel.app/','https://capstone-2-client-git-visualupdate3.jjdmolano.vercel.app/'],
+    origin: ['http://localhost:3000','https://molano-capstone-2-client.vercel.app','https://capstone-2-client-git-master.jjdmolano.vercel.app','https://capstone-2-client-git-visualupdate2.jjdmolano.vercel.app','https://capstone-2-client.jjdmolano.vercel.app','https://capstone-2-client-git-visualupdate3.jjdmolano.vercel.app'],
     optionsSuccessStatus: 200
 }
 
